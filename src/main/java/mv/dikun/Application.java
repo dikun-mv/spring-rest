@@ -29,7 +29,7 @@ public class Application {
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "Spring REST service API",
+                "Spring REST service API documentation",
                 "Created by Maxim Dikun",
                 "",
                 "",
