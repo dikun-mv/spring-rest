@@ -3,6 +3,8 @@ package mv.dikun;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -24,17 +26,14 @@ public class Application {
                 .apis(RequestHandlerSelectors.basePackage("mv.dikun.controller"))
                 .paths(PathSelectors.any())
                 .build()
+                .ignoredParameterTypes(ResponseEntity.class)
                 .apiInfo(apiInfo());
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfo(
-                "Spring REST service API documentation",
-                "Created by Maxim Dikun",
-                "",
-                "",
-                "",
-                "",
-                "");
+        return new ApiInfoBuilder()
+                .title("Spring REST service documentation")
+                .description("Created by Maxim Dikun")
+                .build();
     }
 }

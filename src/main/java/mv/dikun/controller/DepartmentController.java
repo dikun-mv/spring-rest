@@ -1,5 +1,6 @@
 package mv.dikun.controller;
 
+import io.swagger.annotations.ApiOperation;
 import mv.dikun.model.Department;
 import mv.dikun.model.Employee;
 import mv.dikun.repository.DepartmentRepository;
@@ -23,6 +24,7 @@ public class DepartmentController {
         this.departmentRepository = departmentRepository;
     }
 
+    @ApiOperation(value = "readAll", response = Department.class)
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
     public ResponseEntity readAll() {
         List<Department> departments = departmentRepository.findAll();
@@ -32,6 +34,7 @@ public class DepartmentController {
                 ResponseEntity.noContent().build();
     }
 
+    @ApiOperation(value = "readOne", response = Department.class)
     @RequestMapping(value = "/departments/{deptId}", method = RequestMethod.GET)
     public ResponseEntity readOne(@PathVariable Long deptId) {
         Department department = departmentRepository.findOne(deptId);
@@ -84,14 +87,15 @@ public class DepartmentController {
 
     @RestController
     @RequestMapping(value = "/api/departments/{deptId}/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public class EmbeddedEmployeeController {
+    public class NestedEmployeeController {
         private EmployeeRepository employeeRepository;
 
         @Autowired
-        public EmbeddedEmployeeController(EmployeeRepository employeeRepository) {
+        public NestedEmployeeController(EmployeeRepository employeeRepository) {
             this.employeeRepository = employeeRepository;
         }
 
+        @ApiOperation(value = "readAll", response = Employee.class)
         @RequestMapping(value = "/employees", method = RequestMethod.GET)
         public ResponseEntity readAll(@PathVariable Long deptId) {
             List<Employee> employees = employeeRepository.findByDepartmentId(deptId);

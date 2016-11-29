@@ -1,5 +1,6 @@
 package mv.dikun.controller;
 
+import io.swagger.annotations.ApiOperation;
 import mv.dikun.model.Department;
 import mv.dikun.model.Employee;
 import mv.dikun.repository.DepartmentRepository;
@@ -25,6 +26,7 @@ public class EmployeeController {
         this.departmentRepository = departmentRepository;
     }
 
+    @ApiOperation(value = "readAll", response = Employee.class)
     @RequestMapping(value = "/employees", method = RequestMethod.GET)
     public ResponseEntity readAll() {
         List<Employee> employees = employeeRepository.findAll();
@@ -34,6 +36,7 @@ public class EmployeeController {
                 ResponseEntity.noContent().build();
     }
 
+    @ApiOperation(value = "readOne", response = Employee.class)
     @RequestMapping(value = "/employees/{empId}", method = RequestMethod.GET)
     public ResponseEntity readOne(@PathVariable Long empId) {
         Employee employee = employeeRepository.findOne(empId);
