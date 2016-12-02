@@ -25,9 +25,9 @@ public class DepartmentController {
         this.departmentRepository = departmentRepository;
     }
 
-    @ApiOperation(value = "readAll", response = Department.class)
+    @ApiOperation(value = "getAll", response = Department.class)
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
-    public ResponseEntity readAll() {
+    public ResponseEntity getAll() {
         List<Department> departments = departmentRepository.findAll();
 
         return (departments != null) ?
@@ -35,9 +35,9 @@ public class DepartmentController {
                 ResponseEntity.noContent().build();
     }
 
-    @ApiOperation(value = "readOne", response = Department.class)
+    @ApiOperation(value = "getOne", response = Department.class)
     @RequestMapping(value = "/departments/{deptId}", method = RequestMethod.GET)
-    public ResponseEntity readOne(@PathVariable Long deptId) {
+    public ResponseEntity getOne(@PathVariable Long deptId) {
         Department department = departmentRepository.findOne(deptId);
 
         return (department != null) ?
@@ -81,11 +81,7 @@ public class DepartmentController {
         else return ResponseEntity.notFound().build();
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity exceptionHandler() {
-        return ResponseEntity.badRequest().build();
-    }
-
+    @CrossOrigin
     @RestController
     @RequestMapping(value = "/api/departments/{deptId}/", produces = MediaType.APPLICATION_JSON_VALUE)
     public class NestedEmployeeController {
@@ -96,9 +92,9 @@ public class DepartmentController {
             this.employeeRepository = employeeRepository;
         }
 
-        @ApiOperation(value = "readAll", response = Employee.class)
+        @ApiOperation(value = "getAll", response = Employee.class)
         @RequestMapping(value = "/employees", method = RequestMethod.GET)
-        public ResponseEntity readAll(@PathVariable Long deptId) {
+        public ResponseEntity getAll(@PathVariable Long deptId) {
             List<Employee> employees = employeeRepository.findByDepartmentId(deptId);
 
             return (employees != null) ?
@@ -119,11 +115,6 @@ public class DepartmentController {
                     .build().toUri();
 
             return ResponseEntity.created(location).build();
-        }
-
-        @ExceptionHandler(Exception.class)
-        public ResponseEntity exceptionHandler() {
-            return ResponseEntity.badRequest().build();
         }
     }
 }

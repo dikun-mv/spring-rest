@@ -27,9 +27,9 @@ public class EmployeeController {
         this.departmentRepository = departmentRepository;
     }
 
-    @ApiOperation(value = "readAll", response = Employee.class)
+    @ApiOperation(value = "getAll", response = Employee.class)
     @RequestMapping(value = "/employees", method = RequestMethod.GET)
-    public ResponseEntity readAll() {
+    public ResponseEntity getAll() {
         List<Employee> employees = employeeRepository.findAll();
 
         return (employees != null) ?
@@ -37,9 +37,9 @@ public class EmployeeController {
                 ResponseEntity.noContent().build();
     }
 
-    @ApiOperation(value = "readOne", response = Employee.class)
+    @ApiOperation(value = "getOne", response = Employee.class)
     @RequestMapping(value = "/employees/{empId}", method = RequestMethod.GET)
-    public ResponseEntity readOne(@PathVariable Long empId) {
+    public ResponseEntity getOne(@PathVariable Long empId) {
         Employee employee = employeeRepository.findOne(empId);
 
         return (employee != null) ?
@@ -94,10 +94,5 @@ public class EmployeeController {
             return ResponseEntity.ok().build();
         }
         else return ResponseEntity.notFound().build();
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity exceptionHandler() {
-        return ResponseEntity.badRequest().build();
     }
 }
